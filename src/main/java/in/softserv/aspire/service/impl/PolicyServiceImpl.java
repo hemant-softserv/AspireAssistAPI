@@ -24,41 +24,45 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     public APIResponseDTO createPolicy(PolicyDTO dto) {
-        logger.info("--------------------");
-        logger.info("in create policy");
-        logger.info("Aspire{}", dto);
-        logger.info("--------------------");
+       // logger.info("--------------------");
+       // logger.info("in create policy");
+        //logger.info("Aspire{}", dto);
+       // logger.info("--------------------");
         return this.sendPolicyDataToAssist(dto);
     }
 
     private APIResponseDTO sendPolicyDataToAssist(PolicyDTO dto) {
-        logger.info("--------------------");
-        logger.info("in sendPolicyDataToAssist ");
+      //  logger.info("--------------------");
+      //  logger.info("in sendPolicyDataToAssist ");
 
-        try {
-            Thread.sleep(2000L);
-        } catch (InterruptedException var6) {
-            throw new RuntimeException(var6);
-        }
+//        try {
+//            Thread.sleep(2000L);
+//        } catch (InterruptedException var6) {
+//            throw new RuntimeException(var6);
+//        }
 
-        logger.info("Assist{}", dto);
-        logger.info("--------------------");
+        //logger.info("Assist{}", dto);
+       // logger.info("--------------------");
         String url = helper.getCreateCustomerAPIURLWithData();
         Map<String, String> params = helper.getQParamsMapForCustomerCreateAPI(dto);
         PolicyDTO result = restTemplate.getForObject(url, PolicyDTO.class, params);
         APIResponseDTO newResDto;
         if (result != null) {
-            logger.info(result.toString());
-            newResDto = APIResponseDTO.builder()
-                    .statusMessage(result.getStatusMessage())
-                    .statusCode(result.getStatusCode())
-                    .customerID(result.getCustomerID())
-                    .build();
+            //logger.info(result.toString());
+            synchronized (PolicyDTO.class){
+                newResDto = APIResponseDTO.builder()
+                        .statusMessage(result.getStatusMessage())
+                        .statusCode(result.getStatusCode())
+                        .customerID(result.getCustomerID())
+                        .memberShipNo(result.getMembershipNo())
+                        .build();
+            }
+
         } else {
             newResDto = APIResponseDTO.builder().build();
         }
 
-        logger.info("create customer output {}", newResDto);
+        //logger.info("create customer output {}", newResDto);
         return newResDto;
     }
 }

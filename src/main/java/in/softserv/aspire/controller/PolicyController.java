@@ -24,7 +24,7 @@ public class PolicyController {
 
     @PostMapping
     public ResponseEntity<APIResponseDTO> createPolicy(@RequestBody PolicyDTO dto) {
-        this.logger.info("In Policy Controller -> Create Policy");
+        this.logger.info("In Policy Controller -> Create Policy "+dto.getMembershipNo());
         APIResponseDTO newDTO = this.service.createPolicy(dto);
         return new ResponseEntity<>(newDTO, HttpStatus.valueOf(newDTO.getStatusCode() == 0 ? 200 : newDTO.getStatusCode()));
     }

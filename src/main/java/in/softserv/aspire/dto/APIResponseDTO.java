@@ -11,11 +11,12 @@ import lombok.*;
 @ToString
 public class APIResponseDTO {
 
-    @JsonProperty("CustomerID")
     private int customerID;
-    @JsonProperty("StatusMessage")
+
+    private String memberShipNo;
+
     private String statusMessage;
-    @JsonProperty("StatusCode")
+
     private int statusCode;
 
 }

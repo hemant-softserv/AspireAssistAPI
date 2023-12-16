@@ -1,7 +1,10 @@
 package in.softserv.aspire;
 
 import java.time.Duration;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import in.softserv.aspire.thread.WorkerThread;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +20,10 @@ public class AspireAssistApiApplication implements CommandLineRunner {
     private long apiReadTimeOut;
     @Value("${user.api.connectTimeout}")
     private long apiConnectTimeout;
+    @Value("${thread.data.membershipNoStart}")
+    private String membershipNoStart;
+    @Value("${thread.data.apiKey}")
+    private String apiKey;
 
 
     public static void main(String[] args) {
@@ -32,5 +39,15 @@ public class AspireAssistApiApplication implements CommandLineRunner {
     }
 
     public void run(String... args) throws Exception {
+
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        for (int i = 0; i < 10; i++) {
+            Runnable worker = new WorkerThread("" + i,membershipNoStart+i,apiKey);
+            executor.execute(worker);
+        }
+        executor.shutdown();
+        while (!executor.isTerminated()) {
+        }
+        System.out.println("Finished all threads");
     }
 }
