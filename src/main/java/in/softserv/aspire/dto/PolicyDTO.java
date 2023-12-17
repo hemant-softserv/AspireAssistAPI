@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @ToString
 public class PolicyDTO {
-    
+
     @JsonProperty("VehicleMake")
     private String vehicleMake;
     @JsonProperty("RetailerName")
