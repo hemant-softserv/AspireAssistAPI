@@ -24,32 +24,18 @@ public class PolicyServiceImpl implements PolicyService {
     }
 
     public APIResponseDTO createPolicy(PolicyDTO dto) {
-       // logger.info("--------------------");
-       // logger.info("in create policy");
-        //logger.info("Aspire{}", dto);
-       // logger.info("--------------------");
+
         return this.sendPolicyDataToAssist(dto);
     }
 
     private APIResponseDTO sendPolicyDataToAssist(PolicyDTO dto) {
-      //  logger.info("--------------------");
-      //  logger.info("in sendPolicyDataToAssist ");
 
-//        try {
-//            Thread.sleep(2000L);
-//        } catch (InterruptedException var6) {
-//            throw new RuntimeException(var6);
-//        }
-
-        //logger.info("Assist{}", dto);
-       // logger.info("--------------------");
         String url = helper.getCreateCustomerAPIURLWithData();
         Map<String, String> params = helper.getQParamsMapForCustomerCreateAPI(dto);
         PolicyDTO result = restTemplate.getForObject(url, PolicyDTO.class, params);
         APIResponseDTO newResDto;
         if (result != null) {
-            //logger.info(result.toString());
-            synchronized (PolicyDTO.class){
+            synchronized (PolicyDTO.class) {
                 newResDto = APIResponseDTO.builder()
                         .statusMessage(result.getStatusMessage())
                         .statusCode(result.getStatusCode())
@@ -62,7 +48,7 @@ public class PolicyServiceImpl implements PolicyService {
             newResDto = APIResponseDTO.builder().build();
         }
 
-        //logger.info("create customer output {}", newResDto);
+        // logger.info("create customer output {}", newResDto);
         return newResDto;
     }
 }

@@ -24,7 +24,8 @@ public class AspireAssistApiApplication implements CommandLineRunner {
     private String membershipNoStart;
     @Value("${thread.data.apiKey}")
     private String apiKey;
-
+    @Value("${user.api.multipleCallTest}")
+    private boolean testMultipleCalls;
 
     public static void main(String[] args) {
         SpringApplication.run(AspireAssistApiApplication.class, args);
@@ -38,16 +39,18 @@ public class AspireAssistApiApplication implements CommandLineRunner {
                 .build();
     }
 
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        if (testMultipleCalls) {
+            ExecutorService executor = Executors.newFixedThreadPool(5);
+            for (int i = 0; i < 10; i++) {
+                Runnable worker = new WorkerThread("" + i, membershipNoStart + i, apiKey);
+                executor.execute(worker);
+            }
+            executor.shutdown();
+            while (!executor.isTerminated()) {
+            }
+            System.out.println("Finished all threads");
+        }
 
-        ExecutorService executor = Executors.newFixedThreadPool(5);
-        for (int i = 0; i < 10; i++) {
-            Runnable worker = new WorkerThread("" + i,membershipNoStart+i,apiKey);
-            executor.execute(worker);
-        }
-        executor.shutdown();
-        while (!executor.isTerminated()) {
-        }
-        System.out.println("Finished all threads");
     }
 }
