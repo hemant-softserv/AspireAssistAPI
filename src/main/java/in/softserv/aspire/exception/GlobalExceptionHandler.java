@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
                 .statusMessage(ex.getMessage())
                 .statusCode(HttpStatus.REQUEST_TIMEOUT.value())
                 .build();
-        return new ResponseEntity<>(aDto, HttpStatus.REQUEST_TIMEOUT);
+        logger.info("error response {}",aDto);
+        return new ResponseEntity<>(aDto, HttpStatus.OK);
     }
 }

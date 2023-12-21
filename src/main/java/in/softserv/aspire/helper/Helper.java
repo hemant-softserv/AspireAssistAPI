@@ -5,7 +5,7 @@ import in.softserv.aspire.dto.PolicyDTO;
 import java.util.Map;
 
 public interface Helper {
-    String getCreateCustomerAPIURLWithData();
+    String getCustomerAPIURLWithData(String url);
 
-    Map<String, String> getQParamsMapForCustomerCreateAPI(PolicyDTO dto);
+    Map<String, String> getQParamsMapForCustomerAPI(PolicyDTO dto);
 }

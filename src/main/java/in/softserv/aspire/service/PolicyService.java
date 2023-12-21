@@ -5,4 +5,6 @@ import in.softserv.aspire.dto.PolicyDTO;
 
 public interface PolicyService {
     APIResponseDTO createPolicy(PolicyDTO dto);
+    APIResponseDTO updatePolicy(PolicyDTO dto);
+    APIResponseDTO cancelPolicy(PolicyDTO dto);
 }

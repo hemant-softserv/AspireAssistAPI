@@ -54,7 +54,7 @@ public class WorkerThread implements Runnable {
                 .city("MUIRLEA")
                 .apiKey(apiKey)
                 .build();
-        String url = "http://localhost" + ":" + "8091" + "/policy";
+        String url = "http://localhost:/policy";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

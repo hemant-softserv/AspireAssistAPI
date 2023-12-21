@@ -14,17 +14,17 @@ public class HelperImpl implements Helper {
 
     @Value("${user.api.assist.host}")
     private String host;
-    @Value("${user.api.assist.createCustomer}")
-    private String createCustomerAPIURL;
-    @Value("${user.api.assist.createCustomerQueryParam}")
-    private String createCustomerAPIQueryParam;
 
 
-    public String getCreateCustomerAPIURLWithData() {
-        return this.host + this.createCustomerAPIURL + "?" + this.createCustomerAPIQueryParam;
+    @Value("${user.api.assist.customerQueryParam}")
+    private String customerAPIQueryParam;
+
+
+    public String getCustomerAPIURLWithData(String customerAPIURL) {
+        return this.host + customerAPIURL + "?" + this.customerAPIQueryParam;
     }
 
-    public Map<String, String> getQParamsMapForCustomerCreateAPI(PolicyDTO dto) {
+    public Map<String, String> getQParamsMapForCustomerAPI(PolicyDTO dto) {
         Map<String, String> params = new HashMap<>();
         params.put("vehicleMake", dto.getVehicleMake());
         params.put("retailerName", dto.getRetailerName());
